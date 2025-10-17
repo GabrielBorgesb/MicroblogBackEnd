@@ -1,30 +1,32 @@
-# Microblogging API - Projeto 1 EC48B
+# Microblogging API - Projeto 1 EC48B - Recuperação
 
 **Aluno:** Gabriel Borges
 **RA:** 2269007
 **Disciplina:** Programação Web Back-End - EC48B Turma C81
 
 ## Descrição
-API de microblogging desenvolvida com Node.js, Express e MongoDB para a disciplina de Programação Web Back-End. Sistema com funcionalidades de publicação, comentários e interações entre usuários.
+API de microblogging desenvolvida com Node.js nativo e MongoDB para a disciplina de Programação Web Back-End. Sistema completo com funcionalidades de publicação, comentários e interações entre usuários, implementado sem uso de frameworks.
 
 ## Funcionalidades
 - CRUD completo de usuários, posts e comentários
 - Sistema de likes em publicações
 - Busca de posts por conteúdo
-- Validação de dados com Joi
-- Tratamento de erros e logging em arquivos
+- Validação de dados integrada
+- Tratamento de erros
 - Relacionamentos entre coleções do MongoDB
 
 ## Tecnologias Utilizadas
 - Node.js
-- Express.js
 - MongoDB + Mongoose
-- Joi (validação)
-- Winston (logging)
+- JavaScript ES6+
 
 ## Instalação
+# Instalar dependências
 npm install
-npm run dev
+
+# Executar servidor
+cd src
+node server.js
 
 # Endpoints da API
 
@@ -32,62 +34,59 @@ npm run dev
 GET /health
 
 ## Usuários
-POST /api/users
-GET /api/users
-GET /api/users/:id
+POST /users
+GET /users
+GET /users/:id
+DELETE /users/:id
 
 ## Posts
-POST /api/posts
-GET /api/posts
-GET /api/posts/search/:term
-POST /api/posts/:id/like
-POST /api/posts/:id/unlike
+POST /posts
+GET /posts
+GET /posts/search?q=termo
+POST /posts/:id/like
+POST /posts/:id/unlike
 
 ## Comentários
-POST /api/comments
-GET /api/comments/post/:postId
+POST /comments
+GET /comments/post/:postId
 
 # Exemplos de Uso
 ## Criar Usuário
-POST /api/users
+POST /users
 {
-"username": "gabrielborges",
-"email": "gabriel.borges@email.com",
-"name": "Gabriel Borges",
-"bio": "Desenvolvedor Full Stack"
+  "username": "gabrielborges",
+  "email": "gabriel.borges@email.com", 
+  "name": "Gabriel Borges",
+  "bio": "Desenvolvedor Full Stack"
 }
 
 ## Criar Post
-POST /api/posts
+POST /posts
 {
-"content": "Desenvolvendo projeto de microblogging para EC48B",
-"author": "ID_DO_USUARIO",
-"tags": ["UTFPR", "NodeJS"]
+  "content": "Desenvolvendo projeto de microblogging para EC48B - Recuperação",
+  "author": "ID_DO_USUARIO",
+  "tags": ["UTFPR", "NodeJS", "MongoDB"]
 }
 
 ## Buscar Posts
-GET /api/posts/search/NodeJS
+GET /posts/search?q=NodeJS
 
 ## Curtir Post
-POST /api/posts/ID_DO_POST/like
+POST /posts/ID_DO_POST/like
 {
-"userId": "ID_DO_USUARIO"
+  "userId": "ID_DO_USUARIO"
 }
 
 ## Adicionar Comentário
-POST /api/comments
+POST /comments
 {
-"content": "Excelente implementação",
-"author": "ID_DO_USUARIO",
-"post": "ID_DO_POST"
+  "content": "Excelente implementação com Node.js puro!",
+  "author": "ID_DO_USUARIO", 
+  "post": "ID_DO_POST"
 }
 
 # Estrutura do Projeto
 src/
 models/ (User, Post, Comment)
-repositories/ (UserRepository, PostRepository, CommentRepository)
-routes/ (users, posts, comments)
-middlewares/ (validation, errorHandler)
-utils/ (logger, validators)
-app.js
+server.js
 
