@@ -1,5 +1,6 @@
 // GABRIEL BORGES 2269007
 const mongoose = require("mongoose");
+const crypto = require("crypto");
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -23,6 +24,11 @@ const userSchema = new mongoose.Schema({
     trim: true,
     maxlength: [100, "Nome não pode exceder 100 caracteres"],
   },
+  password: {
+    type: String,
+    required: [true, "Senha é obrigatória"],
+    minlength: [6, "Senha deve ter pelo menos 6 caracteres"],
+  },
   bio: {
     type: String,
     maxlength: [500, "Bio não pode exceder 500 caracteres"],
@@ -33,5 +39,25 @@ const userSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
+
+// Hash da senha antes de salvar
+userSchema.pre("save", function (next) {
+  if (this.isModified("password")) {
+    this.password = crypto
+      .createHash("sha256")
+      .update(this.password)
+      .digest("hex");
+  }
+  next();
+});
+
+// Método para verificar senha
+userSchema.methods.comparePassword = function (password) {
+  const hashedPassword = crypto
+    .createHash("sha256")
+    .update(password)
+    .digest("hex");
+  return this.password === hashedPassword;
+};
 
 module.exports = mongoose.model("User", userSchema);
